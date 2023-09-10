@@ -70,7 +70,7 @@ options = vision.HandLandmarkerOptions(base_options=base_options,
 detector = vision.HandLandmarker.create_from_options(options)
 
 # STEP 3: Load the input image.
-image = mp.Image.create_from_file("handimage2.png")
+image = mp.Image.create_from_file("IMG_8775.JPEG.png")
 
 # STEP 4: Detect hand landmarks from the input image.
 detection_result = detector.detect(image)
@@ -86,7 +86,6 @@ for i in range(19):
     [angle1.x, angle1.y, angle1.z],
     [angle2.x, angle2.y, angle2.z],
     [angle3.x, angle3.y, angle3.z]
-
   )
   print(str(i) + " " + str(angle_in_degrees))
 
