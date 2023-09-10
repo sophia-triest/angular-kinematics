@@ -51,7 +51,7 @@ options = PoseLandmarkerOptions(
 
 
 
-for subdir, dirs, files in os.walk("./"):
+for subdir, dirs, files in os.walk("../"):
     for dir in dirs:
 
 
