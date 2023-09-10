@@ -99,7 +99,7 @@ for vid in filesToProcess:
                         [point3.x, point3.y, point3.z]
                     )
 
-                    angleArr.append(int(angle_in_degrees))
+                    angleArr.append(angle_in_degrees)
 
                     frameCount += 1
             else:

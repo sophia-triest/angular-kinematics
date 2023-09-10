@@ -86,7 +86,7 @@ with PoseLandmarker.create_from_options(options) as landmarker:
                     [point3.x, point3.y, point3.z]
                 )
 
-            print(int(angle_in_degrees))
+            print(angle_in_degrees)
 
             frameCount += 1
         if cv2.waitKey(10) == 27:
