@@ -3,7 +3,8 @@ import cv2
 import numpy as np
 from mediapipe import solutions
 from mediapipe.framework.formats import landmark_pb2
-import os
+import numpy as np
+
 
 def getAngle(a, b, c):
   a = np.array(a)
@@ -51,12 +52,8 @@ options = PoseLandmarkerOptions(
 
 
 
-for subdir, dirs, files in os.walk("./"):
-    for dir in dirs:
-
-
-
 angleArr = []
+
 frameCount = 0
 with PoseLandmarker.create_from_options(options) as landmarker:
     cap = cv2.VideoCapture("./IMG_9841.mp4")
