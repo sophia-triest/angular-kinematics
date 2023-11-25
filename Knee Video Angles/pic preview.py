@@ -51,43 +51,30 @@ options = PoseLandmarkerOptions(
     base_options=BaseOptions(model_asset_path=model_path),
     running_mode=VisionRunningMode.VIDEO, min_tracking_confidence=0.9)
 
-filename = './right60/4.mp4'
+filename = './5.png'
 frameCount = 0
 with PoseLandmarker.create_from_options(options) as landmarker:
-    cap = cv2.VideoCapture(filename)
-    length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    while True:
-        if frameCount > 140:  # keep consistent lenght
-            break
-        if cap.grab():
-            flag, frame = cap.retrieve()
-            print(str(frameCount) + '/140(' + str(length) + ')')
-            if not flag:
-                break
-            else:
-                # cv2.imshow('video', frame)
-                mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
-                detect = landmarker.detect_for_video(mp_image, frameCount)
+    img = cv2.imread(filename)
 
-                labeled = draw_landmarks_on_image(frame, detect)
-                scale_percent = 50  # percent of original size
-                width = int(labeled.shape[1] * scale_percent / 100)
-                height = int(labeled.shape[0] * scale_percent / 100)
-                dim = (width, height)
-                resized = cv2.resize(labeled, dim, interpolation=cv2.INTER_AREA)
-                cv2.imshow('video', resized)
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
+    detect = landmarker.detect_for_video(mp_image, frameCount)
 
-                point1 = detect.pose_landmarks[0][24]
-                point2 = detect.pose_landmarks[0][26]
-                point3 = detect.pose_landmarks[0][28]
-                angle_in_degrees = getAngle(
-                    [point1.x, point1.y, point1.z],
-                    [point2.x, point2.y, point2.z],
-                    [point3.x, point3.y, point3.z]
-                )
+    labeled = draw_landmarks_on_image(img, detect)
+    scale_percent = 50  # percent of original size
+    width = int(labeled.shape[1] * scale_percent / 100)
+    height = int(labeled.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    resized = cv2.resize(labeled, dim, interpolation=cv2.INTER_AREA)
+    cv2.imshow('video', resized)
 
-            print(angle_in_degrees)
+    point1 = detect.pose_landmarks[0][24]
+    point2 = detect.pose_landmarks[0][26]
+    point3 = detect.pose_landmarks[0][28]
+    angle_in_degrees = getAngle(
+        [point1.x, point1.y, point1.z],
+        [point2.x, point2.y, point2.z],
+        [point3.x, point3.y, point3.z]
+    )
+    print(angle_in_degrees)
+    cv2.waitKey()
 
-            frameCount += 1
-        if cv2.waitKey(10) == 27:
-            break
